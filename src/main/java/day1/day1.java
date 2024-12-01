@@ -36,7 +36,7 @@ public class day1 {
             occurrencesRight.put(l, Collections.frequency(right, l));
             occurrencesLeft.put(l, Collections.frequency(left, l));
         }
-        
+
         long similarity = 0;
         for (Map.Entry<Integer, Integer> rightEntry : occurrencesRight.entrySet()) {
             similarity += (long) rightEntry.getValue() * rightEntry.getKey() * occurrencesLeft.get(rightEntry.getKey());
