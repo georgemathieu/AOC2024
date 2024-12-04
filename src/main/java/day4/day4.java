@@ -61,6 +61,9 @@ public class day4 {
         // 2455 too high
         // 2447
         System.out.println(count);
+
+
+
     }
 
     private static int getCountDiagonals(int initialSize, String singleLine) {
