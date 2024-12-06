@@ -13,7 +13,7 @@ public class Day6 {
 
     private static Set<Coord> visitedPositions = new HashSet<>();
 
-    private static final int LOOP_LIMIT = 20_000;
+    private static final int LOOP_LIMIT = 10_000;
     private static final char OBSTACLE = '#';
     private static final char CRATE = 'O';
     private static final char EMPTY = '.';
@@ -63,6 +63,7 @@ public class Day6 {
                     // No exception after 20k steps = no solution => loop
                     count ++;
                 } catch (ArrayIndexOutOfBoundsException oups) {
+                    // Exception => solution found, no loop
                 }
                 map[j][i] = EMPTY; // Remove obstacle
             }
