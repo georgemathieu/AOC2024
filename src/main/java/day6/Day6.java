@@ -48,16 +48,16 @@ public class Day6 {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException oups) {
-            for (int j = 0; j < nbRows; j++) {
+            /*for (int j = 0; j < nbRows; j++) {
                 for (int i = 0; i < lineLength; i++) {
                     System.out.print(map[j][i]);
                 }
                 System.out.println();
-            }
+            }*/
             System.out.println(visitedPositions.size());
         }
 
-        // Fail 4646
+        // Fail 4647
     }
 
     enum Direction {
