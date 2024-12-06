@@ -13,6 +13,11 @@ public class Day6 {
 
     private static Set<Coord> visitedPositions = new HashSet<>();
 
+    private static final int LOOP_LIMIT = 20_000;
+    private static final char OBSTACLE = '#';
+    private static final char CRATE = 'O';
+    private static final char EMPTY = '.';
+
     public static void main(String[] args) throws IOException {
         Path inputPath = Paths.get("src/main/java/day6/input.txt");
         List<String> lines = Files.readAllLines(inputPath);
@@ -34,36 +39,70 @@ public class Day6 {
             }
         }
 
-        // Travel
+        // Part 1
         Direction direction = Direction.UP;
         try {
-            while (true) {
-                Coord next = position.applyDirection(direction);
-                if (map[next.y][next.x] == '#') {
-                    direction = shiftDirection(direction);
-                } else {
-                    visitedPositions.add(next);
-                    map[next.y][next.x] = 'X';
-                    position = next;
-                }
-            }
+            travelMap(position, direction, map);
         } catch (ArrayIndexOutOfBoundsException oups) {
-            /*for (int j = 0; j < nbRows; j++) {
-                for (int i = 0; i < lineLength; i++) {
-                    System.out.print(map[j][i]);
-                }
-                System.out.println();
-            }*/
+            // debug(nbRows, lineLength, map);
+            // 4647
             System.out.println(visitedPositions.size());
+            // System.out.println(nbSteps);
         }
 
-        // Fail 4647
+        // Part 2
+        int count = 0;
+        for (int j = 0; j < nbRows; j++) {
+            for (int i = 0; i < lineLength; i++) {
+                if (map[j][i] != EMPTY) continue;
+                map[j][i] = CRATE; // Put obstacle
+
+                try {
+                    travelMap(position, direction, map);
+
+                    // No exception after 20k steps = no solution => loop
+                    count ++;
+                } catch (ArrayIndexOutOfBoundsException oups) {
+                }
+                map[j][i] = EMPTY; // Remove obstacle
+            }
+        }
+        // 1723
+        System.out.println(count);
+    }
+
+    private static void travelMap(Coord position, Direction direction, char[][] map) {
+        long nbSteps = 0;
+        while (true) {
+            Coord next = position.applyDirection(direction);
+            if (map[next.y][next.x] == OBSTACLE || map[next.y][next.x] == CRATE) {
+                direction = shiftDirection(direction);
+            } else {
+                visitedPositions.add(next);
+                // map[next.y][next.x] = 'X';
+                position = next;
+                nbSteps++;
+            }
+
+            if (nbSteps > LOOP_LIMIT) {
+                return;
+            }
+        }
+    }
+
+    private static void debug(int nbRows, int lineLength, char[][] map) {
+        for (int j = 0; j < nbRows; j++) {
+            for (int i = 0; i < lineLength; i++) {
+                System.out.print(map[j][i]);
+            }
+            System.out.println();
+        }
     }
 
     enum Direction {
         UP(0, -1), RIGHT(1, 0), LEFT(-1, 0), DOWN(0, 1);
 
-        Coord jump;
+        final Coord jump;
 
         Direction(int x, int y) {
             this.jump = new Coord(x, y);
@@ -77,10 +116,6 @@ public class Day6 {
             case DOWN -> Direction.LEFT;
             case LEFT -> Direction.UP;
         };
-    }
-
-    private Coord applyDirection(Coord coord, Direction direction) {
-        return new Coord(coord.x + direction.jump.x, coord.y + direction.jump.y);
     }
 
     record Coord(int x, int y) {
