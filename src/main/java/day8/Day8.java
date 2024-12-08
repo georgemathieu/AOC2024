@@ -58,7 +58,7 @@ public class Day8 {
                     final int gapX = coordB.x - coordA.x;
                     final int gapY = coordB.y - coordA.y;
                     addAllPossibleNodes(new Coord(coordA.x - gapX, coordA.y - gapY), nodes, -gapX, -gapY);
-                    addAllPossibleNodes(new Coord(coordB.x + gapX, coordB.y + gapY), nodes, gapX, gapY);
+                    // addAllPossibleNodes(new Coord(coordB.x + gapX, coordB.y + gapY), nodes, gapX, gapY);
                 }
             }
         }
