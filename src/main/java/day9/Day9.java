@@ -31,7 +31,7 @@ public class Day9 {
         // Part 2
         map = reorderPositionsFullBlocks(new TreeMap<>(positions));
         result = computeResult(map);
-        System.out.println(result); // 6183633059094 too high (lent)
+        System.out.println(result); // 6183632723350
     }
 
     private static long computeResult(TreeMap<Integer, Integer> positions) {
@@ -57,7 +57,6 @@ public class Day9 {
                 ranges.put(id, range);
                 continue;
             }
-            if (range.start > idx) range.start = idx;
             if (range.end < idx) range.end = idx;
         }
 
@@ -69,20 +68,15 @@ public class Day9 {
             int emptyBlockSize = Integer.MAX_VALUE;
             int emptyStart = 0;
             boolean foundEmpty = false;
-            for (int i = fromStart; i < fromEnd; i++) {
-                if (positions.get(i) == EMPTY && !foundEmpty) {
+            for (int i = fromStart; i <= fromEnd; i++) {
+                if (positions.get(i) == EMPTY && !foundEmpty) { // new empty block found
                     foundEmpty = true;
                     emptyBlockSize = 1;
                     emptyStart = i;
-                    continue;
-                }
-                if (positions.get(i) == EMPTY && foundEmpty) {
+                } else if (positions.get(i) == EMPTY && foundEmpty) { // same empty block increases
                     emptyBlockSize++;
-                    continue;
-                }
-                if (positions.get(i) != EMPTY && foundEmpty) {
-                    if (emptyBlockSize >= range.length()) {
-
+                } else if (positions.get(i) != EMPTY && foundEmpty) { // empty block ends
+                    if (emptyBlockSize >= range.length()) { // empty block can be written
                         for (int j = emptyStart; j < emptyStart + range.length(); j++) {
                             positions.put(j, rangePosition.getKey());
                         }
@@ -91,7 +85,7 @@ public class Day9 {
                             positions.put(j, EMPTY);
                         }
                         break;
-                    } else {
+                    } else { // empty block can't be written, try to find another one
                         emptyBlockSize = 0;
                         emptyStart = 0;
                         foundEmpty = false;
@@ -99,9 +93,6 @@ public class Day9 {
 
                 }
             }
-
-
-
         }
         return positions;
     }
