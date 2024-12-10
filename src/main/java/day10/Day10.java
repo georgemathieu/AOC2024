@@ -1,5 +1,7 @@
 package day10;
 
+import map.MapComponent;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -59,6 +61,7 @@ public class Day10 {
         }
         sum = pathsMap.values().stream().mapToInt(Integer::intValue).sum();
         System.out.println(sum); // 1436
+
     }
 
     private static int getPaths(int[][] map, Coord start, int currentValue, int sum) {
