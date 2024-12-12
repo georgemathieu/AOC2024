@@ -1,6 +1,6 @@
 package map;
 
-import java.util.List;
+import java.util.*;
 
 public record MapComponent(int nbColumns, int nbRows) {
 
@@ -27,6 +27,21 @@ public record MapComponent(int nbColumns, int nbRows) {
         for (int j = 0; j < nbRows; j++) {
             for (int i = 0; i < nbColumns; i++) {
                 map[j][i] = lines.get(j).charAt(i);
+            }
+        }
+        return map;
+    }
+
+    /**
+     * Transforms a list of strings to a map of coordinate.
+     * @param lines a given list of strings
+     */
+    public Map<Character, Set<Coordinate>> mapByValue(List<String> lines) {
+        Map<Character, Set<Coordinate>> map = new HashMap<>();
+        for (int j = 0; j < nbRows; j++) {
+            for (int i = 0; i < nbColumns; i++) {
+                char c = lines.get(j).charAt(i);
+                map.computeIfAbsent(c, k -> new HashSet<>()).add(new Coordinate(i, j));
             }
         }
         return map;
