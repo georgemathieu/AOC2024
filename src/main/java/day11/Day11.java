@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Day11 {
 
-    private static final Map<Parameters, Long> cachedResults = new HashMap<>();
+    private static Map<Parameters, Long> cachedResults = new HashMap<>();
 
     private static final int NB_BLINKS = 75;
 
@@ -25,9 +25,10 @@ public class Day11 {
         for (Long number : numbers) {
             count += goDown(number, depth);
         }
-        System.out.println(count); // dephts 25 211306
+        // System.out.println(count); // dephts 25 211306
         long end = System.currentTimeMillis();
         System.out.println("time : " + (end - start) + " ms"); // 250783680217283 _ time : 89 ms
+
     }
 
     private static long goDown(long value, int depth) {
