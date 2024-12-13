@@ -26,23 +26,21 @@ public class Day13 {
                     1);
 
             content = lines.get(i + 2).split(":")[1].split(",");
-            Prize prize = new Prize(Integer.parseInt(content[0].split("=")[1]) /*+ 10000000000000L*/,
-                    Integer.parseInt(content[1].split("=")[1]) /*+ 10000000000000L*/);
+            Prize prize = new Prize(Integer.parseInt(content[0].split("=")[1]) + 10000000000000L,
+                    Integer.parseInt(content[1].split("=")[1]) + 10000000000000L);
 
             games.add(new Game(machineA, machineB, prize));
         }
 
-        int sum = 0;
+        long sum = 0;
         for (Game game : games) {
             sum += solve(game);
         }
         System.out.println(sum); // 37680
-        // too low 2147483497
+        // part 2 87550094242995
     }
 
-    private static int solve(Game game) {
-        int count = 0;
-
+    private static long solve(Game game) {
         Machine ma = game.machineA;
         Machine mb = game.machineB;
         Prize prize = game.prize;
@@ -82,9 +80,9 @@ public class Day13 {
         double b = deterB / determinant;
 
         if (a % 1 == 0 && b % 1 == 0 /*&& a < 100 && b < 100*/) { // only full values
-            return (int) (3 * a + b);
+            return (long) (3 * a + b);
         }
-        return 0;
+        return 0L;
     }
 
     /**
