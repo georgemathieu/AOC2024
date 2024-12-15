@@ -9,7 +9,7 @@ public record MapComponent(int nbColumns, int nbRows) {
      * @param lines a given list of strings
      */
     public int[][] asInts(List<String> lines) {
-        int[][] map = new int[nbColumns][nbRows];
+        int[][] map = new int[nbRows][nbColumns];
         for (int j = 0; j < nbRows; j++) {
             for (int i = 0; i < nbColumns; i++) {
                 map[j][i] = Character.getNumericValue(lines.get(j).charAt(i));
@@ -23,7 +23,7 @@ public record MapComponent(int nbColumns, int nbRows) {
      * @param lines a given list of strings
      */
     public char[][] asChars(List<String> lines) {
-        char[][] map = new char[nbColumns][nbRows];
+        char[][] map = new char[nbRows][nbRows];
         for (int j = 0; j < nbRows; j++) {
             for (int i = 0; i < nbColumns; i++) {
                 map[j][i] = lines.get(j).charAt(i);
